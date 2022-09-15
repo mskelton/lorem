@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const version = "1.1.0"
+const version = "1.1.1"
 
 var isVersion bool
 var isSentence bool
@@ -22,7 +22,7 @@ func init() {
 	flag.BoolVar(&isVersion, "v", false, "")
 
 	flag.Usage = func() {
-		fmt.Println(strings.TrimSpace(getHelp()))
+		fmt.Fprintln(flag.CommandLine.Output(), strings.TrimSpace(getHelp()))
 	}
 }
 

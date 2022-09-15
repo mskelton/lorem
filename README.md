@@ -1,6 +1,5 @@
 # Lorem
 
-
 CLI to generate lorem ipsum text.
 
 ## Installation

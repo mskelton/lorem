@@ -1,56 +1,60 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/mskelton/lorem/util"
-	"github.com/spf13/cobra"
 )
 
-var isSentence bool
-var rootCmd = &cobra.Command{
-	Use:   "lorem",
-	Short: "Generate lorem text",
-	Run: func(cmd *cobra.Command, args []string) {
-		rand.Seed(time.Now().UnixNano())
-		count := getCount(args)
+const version = "1.1.0"
 
-		if isSentence {
-			fmt.Println(getSentences(count))
-		} else {
-			fmt.Println(getParagraphs(count))
-		}
-	},
-	Args:    cobra.MaximumNArgs(1),
-	Version: "1.0.0",
-}
+var isVersion bool
+var isSentence bool
 
 func init() {
-	rootCmd.Flags().BoolVarP(&isSentence, "sentence", "s", false, "Generate a sentence of text")
+	flag.BoolVar(&isSentence, "sentence", false, "")
+	flag.BoolVar(&isSentence, "s", false, "")
+	flag.BoolVar(&isVersion, "version", false, "")
+	flag.BoolVar(&isVersion, "v", false, "")
+
+	flag.Usage = func() {
+		fmt.Println(strings.TrimSpace(getHelp()))
+	}
 }
 
 func main() {
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
+	flag.Parse()
+
+	// Print version if requested
+	if isVersion {
+		fmt.Println(version)
+		return
+	}
+
+	// Seed the random number and get the requested count
+	rand.Seed(time.Now().UnixNano())
+	count := getCount()
+
+	// Print the lorem text
+	if isSentence {
+		fmt.Println(getSentences(count))
+	} else {
+		fmt.Println(getParagraphs(count))
 	}
 }
 
-func getCount(args []string) int {
-	if len(args) == 1 {
-		count, err := strconv.Atoi(args[0])
-		cobra.CheckErr(err)
-
-		return count
+func getCount() int {
+	arg := flag.Arg(0)
+	count, err := strconv.Atoi(arg)
+	if err != nil {
+		return 1
 	}
 
-	return 1
+	return count
 }
 
 func getParagraphs(count int) string {
@@ -68,5 +72,19 @@ func getSentences(count int) string {
 }
 
 func getText() string {
-	return strings.TrimSpace(util.LoremText)
+	return strings.TrimSpace(LoremText)
+}
+
+func getHelp() string {
+	return `
+Generate lorem text
+
+Usage:
+  lorem [count]
+
+Flags:
+  -s, --sentence   generate a sentence of text
+  -h, --help       help for lorem
+  -v, --version    version for lorem
+`
 }

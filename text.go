@@ -1,4 +1,4 @@
-package util
+package main
 
 var LoremText = `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac justo cursus, ultrices sapien blandit, rhoncus dolor. Curabitur nec massa id ipsum sollicitudin egestas. Nullam volutpat porta est, nec feugiat purus feugiat a. Nam dignissim et ipsum sed malesuada. Maecenas ac enim efficitur, porttitor diam eu, bibendum nibh. Phasellus mattis urna varius bibendum eleifend. Suspendisse sapien justo, congue at volutpat eleifend, lacinia at nisl. Cras accumsan eu massa eu auctor. Curabitur fringilla ornare sapien id vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam a sem dolor.

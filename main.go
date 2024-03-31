@@ -7,7 +7,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const version = "1.1.1"
@@ -35,8 +34,6 @@ func main() {
 		return
 	}
 
-	// Seed the random number and get the requested count
-	rand.Seed(time.Now().UnixNano())
 	count := getCount()
 
 	// Print the lorem text
